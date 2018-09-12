@@ -1,0 +1,65 @@
+html,
+body {
+  background: #111;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.wrapper {
+  position: absolute;
+  width: 20vw;
+  height: 20vw;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+
+.grid {
+  border-radius: 100%;
+  position: absolute;
+  width: 20vw;
+  height: 20vw;
+  background-size: 20px 20px;
+  mix-blend-mode: screen;
+  animation: rotate linear infinite;
+}
+
+.grid:nth-child(1) {
+  background-image: linear-gradient(rgba(255, 0, 0, 1) 1px, transparent 1px);
+  animation-duration: 5s;
+  animation-delay: 0s;
+}
+.grid:nth-child(2) {
+  background-image: linear-gradient(rgba(0, 255, 0, 1) 1px, transparent 1px);
+  animation-duration: 10s;
+  animation-delay: 2.5s;
+}
+.grid:nth-child(3) {
+  background-image: linear-gradient(rgba(0, 0, 255, 1) 1px, transparent 1px);
+  animation-duration: 15s;
+  animation-delay: -5s;
+}
+.grid:nth-child(4) {
+  background-image: linear-gradient(rgba(0, 255, 255, 1) 1px, transparent 1px);
+  animation-duration: 20s;
+  animation-delay: -7.5s;
+}
+.grid:nth-child(5) {
+  background-image: linear-gradient(rgba(255, 0, 255, 1) 1px, transparent 1px);
+  animation-duration: 25s;
+  animation-delay: -10s;
+}
+.grid:nth-child(6) {
+  background-image: linear-gradient(rgba(255, 255, 0, 1) 1px, transparent 1px);
+  animation-duration: 30s;
+  animation-delay: -12.5s;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+  }
+}

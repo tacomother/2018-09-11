@@ -1,0 +1,135 @@
+$side: 15px;
+$l: 50px;
+$num: 150;
+$colorRange: 150;
+$colorStart: 260;
+
+@mixin plane($w, $h) {
+  width: $w;
+  height: $h;
+  transform-style: preserve-3d;
+}
+
+@mixin view($p) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  perspective: $p;
+}
+
+@mixin center {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+html,
+body {
+  background: #111;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.view {
+  @include view(0);
+}
+
+.plane {
+  @include plane($side, $side);
+  &.main {
+    @include center;
+    transform: rotateX(60deg) rotateZ(-30deg);
+    animation: view 2s infinite linear;
+  }
+}
+
+.point {
+  position: absolute;
+  @include plane($side, $side);
+  $colorRange: 150;
+  $colorStart: 260;
+  animation: spiral 10s paused linear both infinite alternate;
+
+  @for $i from 1 through $num {
+    &:nth-child(#{$i}) {
+      $p: $i / $num;
+      animation-delay: -$p * 5s;
+      &::before {
+        background: hsl(($p / 2) * $colorRange + $colorStart, 80%, 50%);
+        font-size: random(100) + px;
+      }
+      &::after {
+        background: hsl((1 - $p / 2) * $colorRange + $colorStart, 80%, 50%);
+        font-size: random(100) + px;
+      }
+    }
+  }
+
+  &::before,
+  &::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    animation: 3s infinite ease-in-out;
+  }
+
+  &::before {
+    transform: translateZ(-$l);
+    animation-name: moveB;
+  }
+
+  &::after {
+    transform: translateZ($l);
+    animation-name: moveA;
+  }
+}
+
+@keyframes moveB {
+  0%,
+  20%,
+  100% {
+    transform: translateZ(-$l);
+  }
+  30%,
+  60% {
+    transform: translateZ(-1em) scale(0.4, 0.4);
+  }
+}
+
+@keyframes moveA {
+  0%,
+  20%,
+  100% {
+    transform: translateZ($l);
+  }
+  30%,
+  60% {
+    transform: translateZ(1em) scale(0.4, 0.4);
+  }
+}
+
+@keyframes spiral {
+  0% {
+    transform: rotateZ(0) rotateX(0);
+  }
+  100% {
+    transform: rotateZ((360 * 15) + deg) rotateX(180deg);
+  }
+}
+
+@keyframes view {
+  0% {
+    transform: rotateX(45deg) rotateZ(0);
+  }
+  100% {
+    transform: rotateX(45deg) rotateZ(360deg);
+  }
+}
